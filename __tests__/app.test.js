@@ -145,7 +145,24 @@ describe("07_models-with-joins routes", () => {
       poems: expect.arrayContaining(poems),
     });
   });
-  it("gets a poem by id", async () => {});
+  it("gets a poem by id", async () => {
+    const poet = await Poets.insert({
+      poet: "Langston Hughes",
+      dateOfBirth: 1902,
+      dateOfDeath: 1967,
+    });
+
+    const poem = {
+      author: "Langston Hughes",
+      title: "Suicide's Note",
+      text: "The calm,\nCool face of the river\nAsked me for a kiss.",
+    };
+
+    const gets = await request(app).post("/api/v1/poems/").send(poem);
+    const res = await request(app).get(`/api/v1/poems/1`);
+
+    expect(res.body).toEqual(poem);
+  });
 
   it("updates a poet by id", async () => {});
   it("updates a poem by id", async () => {});
