@@ -10,7 +10,7 @@ CREATE TABLE poet (
 
 CREATE TABLE poems (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, 
-    FOREIGN KEY(id) REFERENCES poet(id),
+    -- FOREIGN KEY(id) REFERENCES poet(id),
     author TEXT REFERENCES poet(poet),
     title TEXT NOT NULL, 
     text TEXT NOT NULL
