@@ -208,6 +208,16 @@ describe("07_models-with-joins routes", () => {
     });
   });
 
-  it("deletes a poet by id", async () => {});
+  it("deletes a poet by id", async () => {
+    const poet = await Poets.insert({
+      poet: "Langston Hughes",
+      dateOfBirth: 1922,
+      dateOfDeath: 1962,
+    });
+
+    const res = await request(app).delete(`/api/v1/poets/${poet.id}`);
+
+    expect(res.body).toEqual(poet);
+  });
   it("deletes a poem by id", async () => {});
 });
