@@ -30,5 +30,23 @@ describe("07_models-with-joins routes", () => {
     });
   });
 
-  it("adds a new poem", async () => {});
+  it("adds a new poem", async () => {
+    const send = await request(app).post("/api/v1/poets").send({
+      poet: "Langston Hughes",
+      dateOfBirth: 1902,
+      dateOfDeath: 1967,
+    });
+
+    const res = await request(app).post("/api/v1/poems").send({
+      author: "Langston Hughes",
+      title: "Suicide's Note",
+      text: "The calm,\nCool face of the river\nAsked me for a kiss.",
+    });
+
+    expect(res.body).toEqual({
+      author: "Langston Hughes",
+      title: "Suicide's Note",
+      text: "The calm,\nCool face of the river\nAsked me for a kiss.",
+    });
+  });
 });
