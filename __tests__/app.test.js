@@ -50,7 +50,32 @@ describe("07_models-with-joins routes", () => {
     });
   });
 
-  it("gets all poets", async () => {});
+  it("gets all poets", async () => {
+    const poets = await Promise.all(
+      [
+        {
+          poet: "Langston Hughes",
+          dateOfBirth: 1902,
+          dateOfDeath: 1967,
+        },
+        {
+          poet: "Sylvia Plath",
+          dateOfBirth: 1932,
+          dateOfDeath: 1963,
+        },
+        {
+          poet: "Adrienne Rich",
+          dateOfBirth: 1929,
+          dateOfDeath: 2012,
+        },
+      ].map((poet) => Poets.insert(poet))
+    );
+
+    const res = await request(app).get("/api/v1/poets");
+
+    expect(res.body).toEqual(expect.arrayContaining(poets));
+    expect(res.body.length).toEqual(poets.length);
+  });
   it("gets all poems", async () => {});
 
   it("gets a poet by id", async () => {});
