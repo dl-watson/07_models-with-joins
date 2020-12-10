@@ -171,7 +171,7 @@ describe("07_models-with-joins routes", () => {
       dateOfDeath: 1962,
     });
 
-    const res = await request(app).put(`/api/v1/poems/${poet.id}`).send({
+    const res = await request(app).put(`/api/v1/poets/${poet.id}`).send({
       dateOfBirth: 1902,
       dateOfDeath: 1967,
     });
