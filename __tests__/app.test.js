@@ -219,5 +219,21 @@ describe("07_models-with-joins routes", () => {
 
     expect(res.body).toEqual(poet);
   });
-  it("deletes a poem by id", async () => {});
+  it("deletes a poem by id", async () => {
+    const poet = await Poets.insert({
+      poet: "Langston Hughes",
+      dateOfBirth: 1922,
+      dateOfDeath: 1962,
+    });
+
+    const poem = await Poems.insert({
+      author: "Langston Hughes",
+      title: "suIcIdE'S NoTE",
+      text: "The clam,\nCool faCAe of the rRver\nAsked ME for a kISs.",
+    });
+
+    const res = await request(app).delete(`/api/v1/poems/${poet.id}`);
+
+    expect(res.body).toEqual(poem);
+  });
 });
