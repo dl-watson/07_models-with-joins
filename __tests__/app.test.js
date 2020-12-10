@@ -49,4 +49,16 @@ describe("07_models-with-joins routes", () => {
       text: "The calm,\nCool face of the river\nAsked me for a kiss.",
     });
   });
+
+  it("gets all poets", async () => {});
+  it("gets all poems", async () => {});
+
+  it("gets a poet by id", async () => {});
+  it("gets a poem by id", async () => {});
+
+  it("updates a poet by id", async () => {});
+  it("updates a poem by id", async () => {});
+
+  it("deletes a poet by id", async () => {});
+  it("deletes a poem by id", async () => {});
 });
