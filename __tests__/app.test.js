@@ -111,7 +111,40 @@ describe("07_models-with-joins routes", () => {
     expect(res.body.length).toEqual(poems.length);
   });
 
-  it("gets a poet by id", async () => {});
+  it("gets a poet by id", async () => {
+    const poet = await Poets.insert({
+      poet: "Langston Hughes",
+      dateOfBirth: 1902,
+      dateOfDeath: 1967,
+    });
+
+    const poems = await Promise.all(
+      [
+        {
+          author: "Langston Hughes",
+          title: "Suicide's Note",
+          text: "The calm,\nCool face of the river\nAsked me for a kiss.",
+        },
+        {
+          author: "Langston Hughes",
+          title: "Suicide's NOTE",
+          text: "The calm,\nCool face of the river\nAsked me for a kiss.",
+        },
+        {
+          author: "Langston Hughes",
+          title: "SUICIDE'S Note",
+          text: "The calm,\nCool face of the river\nAsked me for a kiss.",
+        },
+      ].map((poem) => Poems.insert(poem))
+    );
+
+    const res = await request(app).get(`/api/v1/poets/${poet.id}`);
+
+    expect(res.body).toEqual({
+      ...poet,
+      poems: expect.arrayContaining(poems),
+    });
+  });
   it("gets a poem by id", async () => {});
 
   it("updates a poet by id", async () => {});
