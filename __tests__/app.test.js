@@ -159,12 +159,30 @@ describe("07_models-with-joins routes", () => {
     };
 
     const gets = await request(app).post("/api/v1/poems/").send(poem);
-    const res = await request(app).get(`/api/v1/poems/1`);
+    const res = await request(app).get(`/api/v1/poems/${poet.id}`);
 
     expect(res.body).toEqual(poem);
   });
 
-  it("updates a poet by id", async () => {});
+  it("updates a poet by id", async () => {
+    const poet = await Poets.insert({
+      poet: "Langston Hughes",
+      dateOfBirth: 1922,
+      dateOfDeath: 1962,
+    });
+
+    const res = await request(app).put(`/api/v1/poems/${poet.id}`).send({
+      dateOfBirth: 1902,
+      dateOfDeath: 1967,
+    });
+
+    expect(res.body).toEqual({
+      id: poet.id,
+      poet: "Langston Hughes",
+      dateOfBirth: 1902,
+      dateOfDeath: 1967,
+    });
+  });
   it("updates a poem by id", async () => {});
 
   it("deletes a poet by id", async () => {});
